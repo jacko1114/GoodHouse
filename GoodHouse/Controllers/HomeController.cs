@@ -1,4 +1,5 @@
 ﻿using GoodHouse.Models;
+using GoodHouse.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,10 +13,12 @@ namespace GoodHouse.Controllers
   public class HomeController : Controller
   {
     private readonly ILogger<HomeController> _logger;
+    private readonly IHouseObjectService _service;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger,IHouseObjectService service)
     {
       _logger = logger;
+      _service = service;
     }
 
     public IActionResult Index()
@@ -26,6 +29,11 @@ namespace GoodHouse.Controllers
     public IActionResult Privacy()
     {
       return View();
+    }
+
+    public async Task<object> AllData()
+    {
+      return await _service.GetHouseObjects();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
