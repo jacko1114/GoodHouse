@@ -18,18 +18,18 @@ namespace GoodHouse.Controllers
     {
       _logger = logger;
     }
-
+    [NonAction]
     public IActionResult Index()
     {
       return View();
     }
-
+    [NonAction]
     public IActionResult Privacy()
     {
       return View();
     }
 
-
+    [NonAction]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
