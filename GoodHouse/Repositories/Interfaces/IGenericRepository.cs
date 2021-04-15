@@ -9,8 +9,8 @@ namespace GoodHouse.Repositories.Interfaces
   public interface IGenericRepository<TEntity,TEntity2> where TEntity : class
   {
     Task<IEnumerable<TEntity>> GetAll();
-    OperationResult Insert(TEntity t,TEntity2 t2);
-    OperationResult Update(TEntity t,TEntity2 t2);
-    OperationResult Delete(TEntity t);
+    Task<OperationResult> Insert(TEntity t,TEntity2 t2);
+    Task<OperationResult> Update(TEntity t,TEntity2 t2);
+    Task<OperationResult> Delete(TEntity t);
   }
 }

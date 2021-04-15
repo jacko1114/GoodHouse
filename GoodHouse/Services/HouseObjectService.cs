@@ -39,7 +39,7 @@ namespace GoodHouse.Services
 
       return _repo.GetByCondition(conditionStrings);
     }
-    public OperationResult CreateHouseObjects(HouseObjectCreateViewModel obj)
+    public Task<OperationResult> CreateHouseObjects(HouseObjectCreateViewModel obj)
     {
       var housingLayoutId = Guid.NewGuid();
 
@@ -84,7 +84,7 @@ namespace GoodHouse.Services
 
       return result;
     }
-    public OperationResult UpdateHouseObject(HouseObjectViewModel obj)
+    public Task<OperationResult> UpdateHouseObject(HouseObjectViewModel obj)
     {
       var houseObj = new HouseObject
       {
@@ -126,7 +126,7 @@ namespace GoodHouse.Services
 
       return result;
     }
-    public OperationResult DeleteHouseObject(Guid houseObjectId) {
+    public Task<OperationResult> DeleteHouseObject(Guid houseObjectId) {
 
       var condition = new Dictionary<string, object> { 
         ["HousingLayoutId"] = houseObjectId 
@@ -138,10 +138,7 @@ namespace GoodHouse.Services
       }
       else
       {
-        return new OperationResult { 
-          IsSuccessful = false,
-          MessageInfo = "發生錯誤"
-        };
+        throw new Exception();
       }
     }
   }

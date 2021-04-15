@@ -12,8 +12,8 @@ namespace GoodHouse.Services.Interfaces
   {
     Task<IEnumerable<HouseObject>> GetHouseObjects();
     Task<IEnumerable<HouseObject>> GetHouseObjectsByCondition(Dictionary<string, object> conditions);
-    OperationResult CreateHouseObjects(HouseObjectCreateViewModel obj);
-    OperationResult UpdateHouseObject(HouseObjectViewModel obj);
-    OperationResult DeleteHouseObject(Guid houseObjectId);
+    Task<OperationResult> CreateHouseObjects(HouseObjectCreateViewModel obj);
+    Task<OperationResult> UpdateHouseObject(HouseObjectViewModel obj);
+    Task<OperationResult> DeleteHouseObject(Guid houseObjectId);
   }
 }

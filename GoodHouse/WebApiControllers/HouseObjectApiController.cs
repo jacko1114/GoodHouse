@@ -45,21 +45,21 @@ namespace GoodHouse.WebApiControllers
     }
 
     [HttpPost("createData")]
-    public OperationResult CreateData(HouseObjectCreateViewModel obj)
+    public async Task<OperationResult> CreateData(HouseObjectCreateViewModel obj)
     {
-      return _houseObjectService.CreateHouseObjects(obj);
+      return await _houseObjectService.CreateHouseObjects(obj);
     }
 
     [HttpPost("updateData")]
-    public OperationResult UpdateData(HouseObjectViewModel obj)
+    public async Task<OperationResult> UpdateData(HouseObjectViewModel obj)
     {
-      return _houseObjectService.UpdateHouseObject(obj);
+      return await _houseObjectService.UpdateHouseObject(obj);
     }
 
     [HttpPost("deleteData")]
-    public OperationResult DeleteData(HouseObjectViewModel obj)
+    public async Task<OperationResult> DeleteData(HouseObjectViewModel obj)
     {
-      return _houseObjectService.DeleteHouseObject(obj.HouseObjectId);
+      return await _houseObjectService.DeleteHouseObject(obj.HouseObjectId);
     }
   }
 }

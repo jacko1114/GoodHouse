@@ -29,13 +29,13 @@ namespace GoodHouse.Repositories
       return await _conn.QueryAsync<HouseObject>(query);
     }
 
-    public OperationResult Insert(HouseObject obj, HousingLayout layout)
+    public async Task<OperationResult> Insert(HouseObject obj, HousingLayout layout)
     {
       OperationResult result = new();
       var (objKeys, objValues) = GetArray<HouseObject>(obj);
       var (layoutKeys, layoutValues) = GetArray<HousingLayout>(layout);
       string houseObjectQuery = $"Insert Into HouseObjects ({string.Join(",", objKeys)}) Values ({string.Join(",", objValues)})";
-      string housingLayoutQuery = $"Insert Into HouseObjects ({string.Join(",", layoutKeys)}) Values ({string.Join(",", layoutValues)})";
+      string housingLayoutQuery = $"Insert Into HousingLayouts ({string.Join(",", layoutKeys)}) Values ({string.Join(",", layoutValues)})";
 
       _conn.Open();
 
@@ -43,22 +43,22 @@ namespace GoodHouse.Repositories
       {
         try
         {
-          _conn.ExecuteAsync(houseObjectQuery);
-          _conn.ExecuteAsync(housingLayoutQuery);
+          await _conn.ExecuteAsync(houseObjectQuery);
+          await _conn.ExecuteAsync(housingLayoutQuery);
           result.IsSuccessful = true;
           _tran.Commit();
         }
         catch (Exception ex)
         {
+          await _tran.RollbackAsync();
           result.IsSuccessful = false;
           result.Exception = ex;
-          _tran.RollbackAsync();
         }
       }
       return result;
     }
 
-    public OperationResult Update(HouseObject obj, HousingLayout layout)
+    public async Task<OperationResult> Update(HouseObject obj, HousingLayout layout)
     {
       OperationResult result = new();
       var (objKeys, objValues) = GetArray<HouseObject>(obj);
@@ -86,22 +86,22 @@ namespace GoodHouse.Repositories
       {
         try
         {
-          _conn.ExecuteAsync(houseObjectQuery);
-          _conn.ExecuteAsync(housingLayoutQuery);
+          await _conn.ExecuteAsync(houseObjectQuery);
+          await _conn.ExecuteAsync(housingLayoutQuery);
           result.IsSuccessful = true;
           _tran.Commit();
         }
         catch (Exception ex)
         {
+          await _tran.RollbackAsync();
           result.IsSuccessful = false;
           result.Exception = ex;
-          _tran.RollbackAsync();
         }
       }
       return result;
     }
 
-    public OperationResult Delete(HouseObject obj)
+    public async Task<OperationResult> Delete(HouseObject obj)
     {
       OperationResult result = new();
 
@@ -113,16 +113,16 @@ namespace GoodHouse.Repositories
       {
         try
         {
-          _conn.ExecuteAsync(deleteHouseObjectQuery);
-          _conn.ExecuteAsync(deletehousingLayoutQuery);
+          await _conn.ExecuteAsync(deleteHouseObjectQuery);
+          await _conn.ExecuteAsync(deletehousingLayoutQuery);
           result.IsSuccessful = true;
           _tran.Commit();
         }
         catch (Exception ex)
         {
+          await _tran.RollbackAsync();
           result.IsSuccessful = false;
           result.Exception = ex;
-          _tran.RollbackAsync();
         }
       }
       return result;
